@@ -1,0 +1,1 @@
+console.log("JavaScript da TechStore carregado!");

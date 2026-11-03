@@ -1,0 +1,276 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+    color: #222;
+}
+
+/* CABEÇALHO */
+
+.cabecalho {
+    background-color: #111827;
+    padding: 20px 0;
+    color: white;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.logo span {
+    color: #3b82f6;
+}
+
+.pesquisa {
+    display: flex;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    flex: 1;
+    max-width: 450px;
+}
+
+.pesquisa input {
+    border: none;
+    outline: none;
+    padding: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.pesquisa button {
+    border: none;
+    background-color: #2563eb;
+    color: white;
+    padding: 0 18px;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.menu a:hover {
+    color: #60a5fa;
+}
+
+/* CONTEÚDO */
+
+main {
+    min-height: 55vh;
+}
+
+/* RODAPÉ */
+
+footer {
+    background-color: #111827;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .pesquisa {
+        max-width: 100%;
+        order: 3;
+    }
+
+    .menu {
+        gap: 12px;
+    }
+}
+
+/* BANNER PRINCIPAL */
+
+.banner {
+    background: linear-gradient(120deg, #111827, #1e40af);
+    color: white;
+    min-height: 350px;
+    border-radius: 15px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.banner-etiqueta {
+    color: #60a5fa;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.banner-conteudo h2 {
+    font-size: 46px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.banner-conteudo p {
+    color: #d1d5db;
+    max-width: 400px;
+    line-height: 1.6;
+}
+
+.botao-banner {
+    display: inline-block;
+    background-color: #3b82f6;
+    color: white;
+    text-decoration: none;
+    padding: 13px 25px;
+    border-radius: 6px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.botao-banner:hover {
+    background-color: #2563eb;
+    color: white;
+}
+
+.banner-visual {
+    text-align: center;
+    border: 2px solid #60a5fa;
+    border-radius: 50%;
+    width: 240px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-8deg);
+}
+
+.banner-visual span {
+    font-size: 30px;
+    color: #93c5fd;
+}
+
+.banner-visual strong {
+    font-size: 38px;
+}
+
+.banner-visual p {
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+    .banner {
+        padding: 30px;
+    }
+
+    .banner-conteudo h2 {
+        font-size: 34px;
+    }
+
+    .banner-visual {
+        display: none;
+    }
+}
+
+/* CATEGORIAS */
+
+.categorias {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.titulo-secao {
+    margin-bottom: 25px;
+}
+
+.titulo-secao h2 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.titulo-secao p {
+    color: #6b7280;
+}
+
+.categorias-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.categoria-card {
+    background-color: white;
+    padding: 30px 15px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+}
+
+.categoria-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.categoria-card span {
+    font-size: 40px;
+}
+
+.categoria-card h3 {
+    font-size: 17px;
+    margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+    .categorias-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* VITRINE DE PRODUTOS */
+
+.produtos {
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.produto-imagem {
+    height: 200px;
+    background-color: #eef2ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 75px;
+}
+
+.produtos .card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.produtos .card:hover {
+    transform: translateY(-5px);
+}
+
+
+
