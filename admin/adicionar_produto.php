@@ -18,17 +18,84 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $estoque = filter_var($_POST['estoque'] ?? '', FILTER_VALIDATE_INT);
     $categoria = filter_var($_POST['categoria'] ?? '', FILTER_VALIDATE_INT);
 
-    if ($nome === '' || !is_numeric($preco) || $preco < 0 || $estoque === false || $estoque < 0 || $categoria === false) {
+    $imagem = null;
+
+    if (
+        $nome === '' ||
+        !is_numeric($preco) ||
+        $preco < 0 ||
+        $estoque === false ||
+        $estoque < 0 ||
+        $categoria === false
+    ) {
         $mensagem = "Preencha todos os campos corretamente.";
+
     } else {
-        $sql = "INSERT INTO produtos (nome, descricao, preco, estoque, id_categoria)
-                VALUES (?, ?, ?, ?, ?)";
 
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$nome, $descricao, $preco, $estoque, $categoria]);
+        // Verifica se uma imagem foi enviada
+        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] !== UPLOAD_ERR_NO_FILE) {
 
-        header("Location: produtos.php");
-        exit;
+            if ($_FILES['imagem']['error'] !== UPLOAD_ERR_OK) {
+                $mensagem = "Erro ao enviar a imagem.";
+
+            } elseif ($_FILES['imagem']['size'] > 5 * 1024 * 1024) {
+                $mensagem = "A imagem deve ter no máximo 5 MB.";
+
+            } else {
+
+                $tiposPermitidos = [
+                    'image/jpeg' => 'jpg',
+                    'image/png' => 'png',
+                    'image/webp' => 'webp'
+                ];
+
+                $tipoImagem = mime_content_type($_FILES['imagem']['tmp_name']);
+
+                if (!isset($tiposPermitidos[$tipoImagem])) {
+                    $mensagem = "Formato inválido. Envie JPG, PNG ou WEBP.";
+
+                } else {
+
+                    $pasta = "../assets/uploads/";
+
+                    if (!is_dir($pasta)) {
+                        mkdir($pasta, 0755, true);
+                    }
+
+                    $nomeArquivo = bin2hex(random_bytes(16)) . "." . $tiposPermitidos[$tipoImagem];
+
+                    if (move_uploaded_file(
+                        $_FILES['imagem']['tmp_name'],
+                        $pasta . $nomeArquivo
+                    )) {
+                        $imagem = "assets/uploads/" . $nomeArquivo;
+
+                    } else {
+                        $mensagem = "Não foi possível salvar a imagem.";
+                    }
+                }
+            }
+        }
+
+        if ($mensagem === "") {
+
+            $sql = "INSERT INTO produtos
+                    (nome, descricao, preco, estoque, id_categoria, imagem)
+                    VALUES (?, ?, ?, ?, ?, ?)";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                $nome,
+                $descricao,
+                $preco,
+                $estoque,
+                $categoria,
+                $imagem
+            ]);
+
+            header("Location: produtos.php");
+            exit;
+        }
     }
 }
 
@@ -59,7 +126,7 @@ $categorias = $stmtCategorias->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php endif; ?>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
 
         <div class="mb-3">
             <label class="form-label">Nome do produto</label>
@@ -94,6 +161,19 @@ $categorias = $stmtCategorias->fetchAll(PDO::FETCH_ASSOC);
                 <?php endforeach; ?>
 
             </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Imagem do produto</label>
+            <input
+                type="file"
+                name="imagem"
+                class="form-control"
+                accept="image/jpeg,image/png,image/webp"
+            >
+            <small class="text-muted">
+                Formatos aceitos: JPG, PNG e WEBP. Máximo: 5 MB.
+            </small>
         </div>
 
         <button type="submit" class="btn btn-success">
