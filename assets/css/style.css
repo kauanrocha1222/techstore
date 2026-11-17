@@ -253,13 +253,22 @@ footer {
 }
 
 .produto-imagem {
-    height: 200px;
-    background-color: #eef2ff;
+    width: 100%;
+    height: 180px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 75px;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #f8f9fa;
 }
+
+.produto-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+}
+
 
 .produtos .card {
     border: none;
@@ -271,6 +280,46 @@ footer {
 .produtos .card:hover {
     transform: translateY(-5px);
 }
+/* Imagem na página de detalhes do produto */
+.imagem-detalhe {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
 
+.imagem-detalhe img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 35px;
+}
 
+/* AJUSTE DAS IMAGENS */
+
+.produto-imagem {
+    height: 180px !important;
+}
+
+.produto-imagem img {
+    max-width: 90% !important;
+    max-height: 90% !important;
+    object-fit: contain !important;
+    padding: 0 !important;
+}
+
+.imagem-detalhe {
+    height: 300px !important;
+}
+
+.imagem-detalhe img {
+    max-width: 85% !important;
+    max-height: 85% !important;
+    object-fit: contain !important;
+    padding: 0 !important;
+}
 

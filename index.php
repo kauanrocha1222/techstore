@@ -2,6 +2,7 @@
 
 
 <?php
+require_once "config/session.php";
 require_once "config/database.php";
 $sqlCategorias = "SELECT * FROM categorias";
 $stmtCategorias = $pdo->prepare($sqlCategorias);
@@ -91,12 +92,17 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-                <nav class="menu">
-                    <a href="index.php">Início</a>
-                    <a href="pages/produtos.php">Produtos</a>
-                    <a href="pages/login.php">Entrar</a>
-                    <a href="pages/carrinho.php">🛒 Carrinho</a>
-                </nav>
+<nav class="menu">
+    <a href="index.php">Início</a>
+    <a href="#produtos">Produtos</a>
+    
+    <?php if (isset($_SESSION['usuario_tipo']) && $_SESSION['usuario_tipo'] === 'admin'): ?>
+        <a href="admin/index.php">Administração</a>
+    <?php endif; ?>
+
+    <a href="pages/login.php">Entrar</a>
+    <a href="pages/carrinho.php">🛒 Carrinho</a>
+</nav>
 
             </div>
         </div>
@@ -117,9 +123,9 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             acessórios e muito mais.
         </p>
 
-        <a href="pages/produtos.php" class="botao-banner">
-            Explorar produtos
-        </a>
+        <a href="#produtos" class="botao-banner">
+    Explorar produtos
+</a>
     </div>
 
     <div class="banner-visual">
@@ -137,7 +143,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- VITRINE DE PRODUTOS -->
 <section class="produtos container">
 
-<div class="titulo-secao">
+<div class="titulo-secao" id="produtos">
     <h2>Nossos produtos</h2>
     <p>Confira alguns dos nossos destaques.</p>
 </div>
@@ -146,45 +152,55 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php if (count($produtos) > 0): ?>
 
-        <?php foreach ($produtos as $produto): ?>
+        
+<?php foreach ($produtos as $produto): ?>
 
-            <div class="col-md-4">
+<div class="col-md-4">
 
-                <div class="card h-100">
+    <div class="card h-100">
 
-                    <div class="produto-imagem">
-                        📦
-                    </div>
+        <div class="produto-imagem">
+            <?php if (!empty($produto['imagem'])): ?>
+                <img
+                    src="<?= htmlspecialchars($produto['imagem']) ?>"
+                    alt="<?= htmlspecialchars($produto['nome']) ?>"
+                    class="img-fluid"
+                >
+            <?php else: ?>
+                📦
+            <?php endif; ?>
+        </div>
 
-                    <div class="card-body">
+        <div class="card-body">
 
-                        <h5 class="card-title">
-                            <?= htmlspecialchars($produto['nome']) ?>
-                        </h5>
+            <h5 class="card-title">
+                <?= htmlspecialchars($produto['nome']) ?>
+            </h5>
 
-                        <p class="card-text">
-                            <?= htmlspecialchars($produto['descricao'] ?? '') ?>
-                        </p>
+            <p class="card-text">
+                <?= htmlspecialchars($produto['descricao'] ?? '') ?>
+            </p>
 
-                        <h5 class="text-primary">
-                            R$ <?= number_format($produto['preco'], 2, ',', '.') ?>
-                        </h5>
+            <h5 class="text-primary">
+                R$ <?= number_format($produto['preco'], 2, ',', '.') ?>
+            </h5>
 
-                        <p>
-                            Estoque: <?= (int) $produto['estoque'] ?>
-                        </p>
+            <p>
+                Estoque: <?= (int) $produto['estoque'] ?>
+            </p>
 
-                        <a href="pages/produto.php?id=<?= (int) $produto['id_produto'] ?>" class="btn btn-primary">
-                          Ver produto
-                         </a>
+            <a href="pages/produto.php?id=<?= (int) $produto['id_produto'] ?>" class="btn btn-primary">
+                Ver produto
+            </a>
 
-                    </div>
+        </div>
 
-                </div>
+    </div>
 
-            </div>
+</div>
 
-        <?php endforeach; ?>
+<?php endforeach; ?>
+
 
     <?php else: ?>
 

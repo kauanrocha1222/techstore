@@ -62,17 +62,22 @@ if (!$produto) {
 
             <div class="col-md-6">
 
-                <div class="produto-imagem">
-                    <?php if (!empty($produto['imagem'])): ?>
-                        <img
-                            src="../assets/images/<?= htmlspecialchars($produto['imagem']) ?>"
-                            alt="<?= htmlspecialchars($produto['nome']) ?>"
-                            class="img-fluid"
-                        >
-                    <?php else: ?>
-                        📦
-                    <?php endif; ?>
-                </div>
+            <?php if (!empty($produto['imagem'])): ?>
+
+<div class="imagem-detalhe">
+    <img
+        src="../<?= htmlspecialchars($produto['imagem']) ?>"
+        alt="<?= htmlspecialchars($produto['nome']) ?>"
+    >
+</div>
+
+<?php else: ?>
+
+<div class="imagem-detalhe">
+    <span style="font-size: 60px;">📦</span>
+</div>
+
+<?php endif; ?>
 
             </div>
 
